@@ -1,135 +1,90 @@
 package arrayList;
-
+import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SukhrobList<E> {
+public class SukhrobList<E> implements ListSukhrob<E> {
+    private Object[] database;
 
-    Object[] database;
-    Object[] newDatabase;
-    int size;
-    private int indexList = 0;
-    private final int copacity = 10;
-
-    public SukhrobList() {
-        database = new Object[copacity];
-        setSize(copacity);
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
+    public int size;
+    private static int copacity = 10;
     public SukhrobList(int size) {
         this.size = size;
-        if (size <= 0) {
-            database = new Object[copacity];
-            setSize(copacity);
-        } else {
-            database = new Object[size];
-            setSize(size);
+        database = new Object[size];
+    }
+    public SukhrobList() {
+        database = new Object[copacity];
+    }
+    @Override
+    public boolean add(E e) {
+        insertCopacity();
+        Object[] arr = new Object[copacity];
+        int k = 0;
+        for (int i = 0; i < size(); i++) {
+            arr[k++] = database[i];
+        }
+        arr[k] = e;
+        database = arr;
+        insertCopacity();
+        return true;
+    }
+    private void insertCopacity() {
+        if (copacity - size() <= 0) {
+            copacity = (copacity * 3 / 2) + 1;
         }
     }
-
-    public void ensureCopacity(int newsize) {
-        if (copacity <= newsize) {
-            newDatabase = new Object[database.length * 3 / 2 + 1];
-            database = newDatabase;
-        } else if (newsize >= getSize()) {
-            newDatabase = new Object[database.length * 3 / 2 + 1];
-            database = newDatabase;
-        }
-    }
-
-
-    public void add(E element) {
-        ensureCopacity(getSize()+1);
-        if (getSize() > indexList) {
-            database[indexList++] = element;
-        } else {
-            newDatabase = new Object[getSize() * 3 / 2 + 1];
-            newDatabase = database;
-            database = newDatabase;
-            setSize(getSize() * 3 / 2 + 1);
-            System.out.println(getSize());
-        }
-    }
-
+    @Override
     public boolean remove(E e) {
-        int a = -1;
-        for (int i = 0; i < database.length; i++) {
-            if (e == database[i]) {
-                a = i;
+        int eIndex=-1;
+        for (int i = 0; i < size; i++) {
+            if(e==database[i]){
+                eIndex=i;
                 break;
             }
         }
-        for (int i = a; i < database.length - 1; i++) {
-            database[i] = database[i + 1];
-        }
-        if (a != -1) {
-            setSize(database.length);
-            indexList--;
-            System.out.println(getNewDatabase());
+        if(eIndex!=-1){
+            for (int i = eIndex; i < size-1; i++) {
+                database[i]=database[i+1];
+            }
+            database[size-1]=null;
+            size();
             return true;
+        }return false;
+    }
+
+    @Override
+    public boolean contains(E e) {
+        for (int i = 0; i < size; i++) {
+            if(e==database[i])return true;
         }
         return false;
     }
-
-    public void setDatabase(Object[] database) {
-        this.database = database;
-    }
-
-    public Object[] getDatabase() {
-        return database;
-    }
-
-
-    public void edit(E e, int index) {
-
-        for (int i = 0; i < database.length; i++) {
+    public E get(int index){
+        for (int i = 0; i < size; i++) {
             if(index==i){
-                newDatabase[i]=e;
+                return (E) database[i];
             }
-            newDatabase[i]=database[i];
-            database=newDatabase;
         }
-
+        return null;
     }
 
-    public int getIndex(E e) {
+    private int size() {
+        int count = 0;
         for (int i = 0; i < database.length; i++) {
-            if (database[i] == e) {
-                return i;
+            if (database[i] != null) {
+                count++;
             }
         }
-        return -1;
+        size = count;
+        return size;
     }
 
-    public boolean getIndexEquals(E e) {
-        for (int i = 0; i < database.length; i++) {
-            if (database[i] == e) {
-                return true;
-            }
+    @Override
+    public String toString() {
+        Object[] newDatabase = new Object[size()];
+        for (int i = 0; i < size(); i++) {
+            newDatabase[i] = database[i];
         }
-        return false;
-    }
-
-//    private int size() {
-//        int count = 0;
-//        for (int i = 0; i < getSize(); i++) {
-//            if (database[i] == null) {
-//                count++;
-//            }
-//        }
-//        setSize(count);
-//        return getSize();
-//    }
-
-    public String getNewDatabase() {
-        return Arrays.toString(Arrays.copyOf(database, indexList));
+        database=newDatabase;
+        return Arrays.toString(database);
     }
 }

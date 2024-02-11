@@ -5,25 +5,43 @@ public class Main {
 
 
         SukhrobList<Integer>list=new SukhrobList<>();
-        System.out.println(list.getSize());
+        //System.out.println(list.getSize());
 
-        list.add(12);
-        list.add(13);
-        list.add(14);
-        list.add(15);
-        list.add(16);
-        list.add(17);
-        list.add(17);
-        list.add(18);
-        list.add(18);
-        list.add(19);
-        System.out.println(list.getNewDatabase());
-        System.out.println(list.remove(14));
-        list.edit(11,0);
-        System.out.println(list.getNewDatabase());
+        System.out.println(list.add(12));
+        System.out.println(list.add(13));
+        System.out.println(list.add(14));
+        System.out.println(list.add(14));
+        System.out.println(list.add(14));
+        System.out.println(list.add(14));
+        System.out.println(list.add(14));
+        System.out.println(list.add(14));
+        System.out.println(list.add(14));
+        System.out.println(list.add(15));
+        System.out.println(list.add(18));
+        System.out.println(list.add(18));
+        System.out.println(list.add(18));
+        System.out.println(list.add(18));
+        System.out.println(list.add(18));
+        System.out.println(list.add(18));
+        System.out.println(list.add(18));
+        System.out.println(list.add(18));
+        System.out.println(list);
+        System.out.println("-----------------");
+        System.out.println(list.remove(13));
+        System.out.println(list);
+        System.out.println("----------------");
+        System.out.println(list.contains(1231));
+        System.out.println("==================");
 
-        System.out.println(list.getIndex(12));
-        System.out.println(list.getIndexEquals(11));
+        System.out.println(list.get(11));
+
+        //System.out.println(list.getNewDatabase());
+//        System.out.println(list.remove(14));
+//        list.edit(11,0);
+//        System.out.println(list.getNewDatabase());
+//
+//        System.out.println(list.getIndex(12));
+//        System.out.println(list.getIndexEquals(11));
 
     }
 }
